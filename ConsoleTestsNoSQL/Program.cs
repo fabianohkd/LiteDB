@@ -21,7 +21,7 @@ namespace ConsoleTestsNoSQL
                     IsActive = true
                 };
 
-                // Inserir novo documento do cliente (Id será auto-incrementado)
+                // Inserir novo cliente (Id será auto-incrementado)
                 clientes.Insert(cliente);
 
                 // Atualize um documento dentro de uma coleção
@@ -33,14 +33,23 @@ namespace ConsoleTestsNoSQL
                 // Use Linq para consultar documentos
                 var results = clientes.Find(x => x.Nome.StartsWith("Jo"));
 
-
+                // Obter coleção de ordens-de-venda
                 var ordens = db.GetCollection<OrdemDeVenda>("ordens");
-                var ov = new OrdemDeVenda() { OrderDate = DateTime.Now, Cliente = cliente };
+
+                // Criando uma ordem
+                var ov = new OrdemDeVenda()
+                {
+                    OrderDate = DateTime.Now,
+                    Cliente = cliente
+                };
+
+                // Inserir nova ordem
                 ordens.Insert(ov);
 
-
+                // associar a ordem no cliente
                 cliente.Ordem = ov;
 
+                // Atualizando o cliente
                 clientes.Update(cliente);
             }
         }
